@@ -7,15 +7,15 @@ import pandas as pd
 
 class BICTCPCongestionControl:
 
-    def __init__(self, Wmax:int, Wmin:int, Smax:int,
+    def __init__(self, wmax:int, wmin:int, Smax:int,
                 Smin:int, Beta:float, low_window:int, 
-                Cwnd:int
+                cwnd:int
         ):
-        self.Wmax = Wmax
-        self.Wmin = Wmin
-        self.Smax = Smax # constant
-        self.Smin = Smin # constant
-        self.cwnd = Cwnd
+        self.wmax = wmax
+        self.wmin = wmin
+        self.smax = Smax # constant
+        self.smin = Smin # constant
+        self.cwnd = cwnd
         self.low_window = low_window # constant
         self.Beta = Beta
         self.round_number = 1
@@ -50,27 +50,29 @@ class BICTCPCongestionControl:
             logging.info(f"{self.round_number} -- cwnd({self.cwnd}) < low window({self.low_window})")
             self.cwnd = self.cwnd + (1 / self.cwnd)
             logging.info(f"{self.round_number} -- cwnd = {self.cwnd}")
-            # everything is normal. DONE
+            # everything is normal.
 
         else:
 
-            if self.cwnd < self.Wmax:
-                logging.info(f"{self.round_number} -- cwnd({self.cwnd}) < Wmax({self.Wmax})")
-                bic_increase = (self.Wmax - self.cwnd)/2
+            if self.cwnd < self.wmax:
+                logging.info(f"{self.round_number} -- cwnd({self.cwnd}) < wmax({self.wmax})")
+                bic_increase = (self.wmax - self.cwnd) / 2
                          
             else:
-                logging.info(f"{self.round_number} -- cwnd({self.cwnd}) >= Wmax({self.Wmax})")
-                bic_increase = self.cwnd - self.Wmax
+                # if window exceeds maximum increment.
+                logging.info(f"{self.round_number} -- cwnd({self.cwnd}) >= wmax({self.wmax})")
+                bic_increase = self.cwnd - self.wmax
             
-            if bic_increase > self.Smax:
-                logging.info(f"{self.round_number} -- bic increase({bic_increase}) > Smax({self.Smax})")
-                bic_increase = self.Smax
+            if bic_increase > self.smax:
+                # additve increase to prevent pressure to the network.
+                logging.info(f"{self.round_number} -- bic increase({bic_increase}) > Smax({self.smax})")
+                bic_increase = self.smax
 
-            elif bic_increase < self.Smin:
-                logging.info(f"{self.round_number} -- bic increase({bic_increase}) < Smin({self.Smin})")
-                bic_increase = self.Smin
+            elif bic_increase < self.smin:
+                logging.info(f"{self.round_number} -- bic increase({bic_increase}) < Smin({self.smin})")
+                bic_increase = self.smin
 
-            self.cwnd = self.cwnd + (bic_increase/self.cwnd)
+            self.cwnd += (bic_increase/self.cwnd)
             logging.info(f"{self.round_number} -- cwnd = {self.cwnd}")
 
         self.cwnd_values.append(self.cwnd)
@@ -83,6 +85,10 @@ class BICTCPCongestionControl:
         self.fig.canvas.flush_events()
 
     def _packet_loss(self):
+        """
+            Another Thread is running and waiting until the random time(*5)
+            and then it invokes fast recovery method.
+        """
         while self.is_running:
             number = random.random() * 5
             time.sleep(number)
@@ -90,34 +96,38 @@ class BICTCPCongestionControl:
             self._fast_recovery()
     
     def _fast_recovery(self):
+        """
+            it changes cnwd, wmax parameters.
+        """
         if self.cwnd < self.low_window:
             logging.info(f'{self.round_number} -- FastRecovery: cwnd({self.cwnd}) < low window({self.low_window})')
             self.cwnd = self.cwnd * 0.5
             logging.info(f"{self.round_number} -- cwnd = {self.cwnd}")
 
         else:
-            if self.cwnd < self.Wmax:
-                logging.info(f"{self.round_number} -- FastRecovery: cwnd({self.cwnd}) < Wmax({self.Wmax})")
-                self.Wmax = self.cwnd * ((2-self.Beta)/2)
-                logging.info(f"{self.round_number} -- Wmax = {self.Wmax}")
+            
+            if self.cwnd < self.wmax:
+                logging.info(f"{self.round_number} -- FastRecovery: cwnd({self.cwnd}) < wmax({self.wmax})")
+                self.wmax = self.cwnd * ((2-self.Beta)/2)
+                logging.info(f"{self.round_number} -- wmax = {self.wmax}")
 
             else:
-                logging.info(f"{self.round_number} -- FastRecovery: cwnd({self.cwnd}) >= Wmax({self.Wmax})")
-                self.Wmax = self.cwnd
-                logging.info(f"{self.round_number} -- Wmax = {self.Wmax}")
+                logging.info(f"{self.round_number} -- FastRecovery: cwnd({self.cwnd}) >= wmax({self.wmax})")
+                self.wmax = self.cwnd
+                logging.info(f"{self.round_number} -- wmax = {self.wmax}")
 
             self.cwnd = self.cwnd * (1-self.Beta)
             logging.info(f"{self.round_number} -- cwnd = {self.cwnd}")
 
     def insert_paramaters_to_dataframe(self):
-        data = [self.round_number, self.cwnd, self.Wmax, self.Wmin]
+        data = [self.round_number, self.cwnd, self.wmax, self.wmin]
         self.dataframe.loc[len(self.dataframe)] = data
 
         
 if __name__ == '__main__':
     bic_tcp = BICTCPCongestionControl(
-        Wmax= 30, Wmin=5, Smin=1, Smax=5, low_window=4,
-        Beta=0.125, Cwnd=10, 
+        wmax= 30, wmin=5, Smin=1, Smax=5, low_window=4,
+        Beta=0.125, cwnd=10, 
     )
     for _ in range(1000):
         bic_tcp.run()
