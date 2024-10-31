@@ -42,7 +42,7 @@ class BICTCPCongestionControl:
         )
     
         # simulating packet loss functionlity with thread.
-        self.packet_loss_thread = threading.Thread(target=self._is_packet_loss)
+        self.packet_loss_thread = threading.Thread(target=self._packet_loss)
         self.packet_loss_thread.start()
         
     def run(self):
@@ -82,7 +82,7 @@ class BICTCPCongestionControl:
         self.fig.canvas.draw()
         self.fig.canvas.flush_events()
 
-    def _is_packet_loss(self):
+    def _packet_loss(self):
         while self.is_running:
             number = random.random() * 5
             time.sleep(number)
