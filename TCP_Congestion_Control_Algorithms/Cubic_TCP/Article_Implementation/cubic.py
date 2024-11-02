@@ -207,5 +207,5 @@ if __name__ == '__main__':
         logging.info('')
     
     cubic_tcp.is_running = False
-    cubic_tcp.dataframe.to_csv('bic_tcp_parameters.csv', index=False)
+    cubic_tcp.dataframe.to_csv('cubic_tcp_parameters.csv', index=False)
     plt.show(block=True)
