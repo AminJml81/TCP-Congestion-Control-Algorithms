@@ -74,7 +74,7 @@ class BICTCPCongestionControl:
             self.cwnd = midpoint
         else:
             if self._is_packet_loss():
-                logging.error('PACKET LOSS')
+                logging.error(f'{self.round_number} -- PACKET LOSS')
                 self.wmax = midpoint
                 logging.info(f'{self.round_number} -- wmax = {self.wmax}')
             else:

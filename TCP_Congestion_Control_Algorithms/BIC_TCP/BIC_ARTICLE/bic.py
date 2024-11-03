@@ -92,7 +92,7 @@ class BICTCPCongestionControl:
         while self.is_running:
             number = random.random() * 5
             time.sleep(number)
-            logging.error('PACKET LOSS')
+            logging.error(f'{self.round_number} -- PACKET LOSS')
             self._fast_recovery()
     
     def _fast_recovery(self):

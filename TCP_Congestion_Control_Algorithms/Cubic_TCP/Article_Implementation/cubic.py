@@ -156,10 +156,10 @@ class CubicTCPCongestionControl:
                 logging.info(f'{self.round_number} -- cwnd({self.cwnd}) < wlast_max({self.wlast_max})')
                 self.k = 0
                 self.origin_point = self.cwnd
-            logging.info(f"f'{self.round_number} -- k: {self.k}, origin_point: {self.origin_point}")
+            logging.info(f'{self.round_number} -- k: {self.k}, origin_point: {self.origin_point}')
             self.ack_cnt = 1
             self.wtcp = self.cwnd
-            logging.info(f"f'{self.round_number} -- ack_cnt: {self.ack_cnt}, wtcp: {self.wtcp}")
+            logging.info(f'{self.round_number} -- ack_cnt: {self.ack_cnt}, wtcp: {self.wtcp}')
 
         t = time.time() + self.dMin - self.epoch_start
         target = self.origin_point + self.c * (t-self.k)**3
