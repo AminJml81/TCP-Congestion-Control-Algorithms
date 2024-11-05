@@ -5,14 +5,33 @@ import random, logging, threading, time
 
 class CubicTCPCongestionControl:
 
-    def __init__(self, cwnd: float, wmax:float, c:float, low_window:float):
+    def __init__(self, cwnd: float, wmax:float, c:float, LOW_WINDOW:float):
+        """
+        Args:
+            cwnd(float): congestion window size.
+            wmax(float): the window size just before the last fast recovery
+                          (where the last packet loss occurred).
+            c(float): cubic parameter.
+            
+
+            LOW_WINDOW(int): if the window size is larger than this threshold,
+                                 BIC engages. (constant)
+
+        Other Instance Variables:
+            is_running(bool): variable to stop packet loss thread when is False.
+            t(int): current time (same as round_number).
+            t_last_loss(int): t of last loss.
+            k(float): The time period it takes to increase the cwnd from its current value
+                          to the wlast_max without encountering further packet loss.
+        """
         self.cwnd = cwnd
         self.wmax = wmax
         self.c = c
-        self.low_window = low_window
-        self.k = 0
-        self.t = 1 # same as round number in previous implementations.
+        self.LOW_WINDOW = LOW_WINDOW
+
+        self.t = 1
         self.t_last_loss = 0
+        self.k = 0
 
         # setting up logging 
         logging.basicConfig(
@@ -40,8 +59,8 @@ class CubicTCPCongestionControl:
         packet_loss_thread.start()
 
     def run(self):
-        if self.cwnd < self.low_window:
-            logging.info(f't{self.t} -- cwnd({self.cwnd}) < low_window({self.low_window})')
+        if self.cwnd < self.LOW_WINDOW:
+            logging.info(f't{self.t} -- cwnd({self.cwnd}) < low_window({self.LOW_WINDOW})')
             self.cwnd *= 0.5
             
         time_since_loss = self.t - self.t_last_loss
@@ -92,7 +111,7 @@ class CubicTCPCongestionControl:
 
 if __name__ == '__main__':
     cubic_tcp = CubicTCPCongestionControl(
-        cwnd=10, wmax=30, c=0.4, low_window=4 
+        cwnd=10, wmax=30, c=0.4, LOW_WINDOW=4 
     )
     for _ in range(1000):
         cubic_tcp.run()

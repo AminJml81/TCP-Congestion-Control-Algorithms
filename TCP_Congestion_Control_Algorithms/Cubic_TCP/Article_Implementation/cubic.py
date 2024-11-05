@@ -5,40 +5,45 @@ import time, threading, logging, random
 
 class CubicTCPCongestionControl:
 
-    def __init__(self, beta:float, c:float, cwnd:int,
+    def __init__(self, c:float, cwnd:float, BETA:float,
                 tcp_friendliness:bool, fast_convergence:bool):
         """
         Args:
-            beta (float): window decrease constant.
-            c (float): cubic parameter.
-            cwnd (int): current window size(here initial window size).
+            c(float): cubic parameter.
+            cwnd(float): congestion window size.
+            BETA(float): multiplicative window decrease factor. (constant)
+            tcp_friendliness(bool):
+            fast_convergence(bool):
 
-        Instance Variables:
-            wlast_max(float): The last value of wmax.
+        Other Instance Variables:
+            is_running(bool): variable to stop packet loss and timeout threads when is False.
+            round_number(int): The round number.
 
-            k(float): The time period it takes to increase the cwnd from its current value
+            wlast_max(float): last value of wmax.
+
+            k(float): time period it takes to increase the cwnd from its current value
                           to the wlast_max without encountering further packet loss.
 
-            epoch_start(float): The timestamp marking the beginning
+            epoch_start(float): timestamp marking the beginning
                                     of the current congestion epoch.
 
-            origin_point(float): The congestion window value at the beginning
+            origin_point(float): congestion window value at the beginning
                                     of the current congestion epoch.
 
-            ack_cnt(int): The number of acknowledgements received since the beginning
+            ack_cnt(int): number of acknowledgements received since the beginning
                               of the current congestion epoch.
 
-            wtcp(float): The target congestion window during
+            wtcp(float): target congestion window during
                              TCP-friendliness calculations.
 
-            ssthresh(float): The slow-start threshold, which determines
+            ssthresh(float): slow-start threshold, which determines
                                  the maximum congestion window size during
                                  the slow-start phase.
 
-            tcp_timestamp(float): A timestamp representing the current time.
+            tcp_timestamp(float): timestamp representing the current time.
         """
         self.c = c
-        self.beta = beta 
+        self.BETA = BETA 
         self.cwnd = cwnd
         self.tcp_friendliness = tcp_friendliness
         self.fast_convergence = fast_convergence
@@ -124,13 +129,13 @@ class CubicTCPCongestionControl:
             self.epoch_start = 0
             if self.fast_convergence and self.cwnd < self.wlast_max:
                 logging.info(f'{self.round_number} -- fast_convergence({self.fast_convergence}) and cwnd({self.cwnd}) < wlast_max({self.wlast_max})')
-                self.wlast_max = self.cwnd * (2-self.beta)/2
+                self.wlast_max = self.cwnd * (2-self.BETA)/2
             else:
                 logging.info(f'{self.round_number} -- fast_convergence({self.fast_convergence}) and cwnd({self.cwnd}) < wlast_max({self.wlast_max})')
                 self.wlast_max = self.cwnd
             
             self.ssthresh = self.cwnd
-            self.cwnd *= (1-self.beta)
+            self.cwnd *= (1-self.BETA)
             logging.info(f'{self.round_number} -- ssthresh:{self.ssthresh}, cwnd:{self.cwnd}')
 
     def _timeout(self):
@@ -176,7 +181,7 @@ class CubicTCPCongestionControl:
         
     def _cubic_tcp_friendliness(self):
         logging.info(f'{self.round_number} -- TCP Friendliness')
-        self.wtcp = self.wtcp + (3*self.beta)/(2-self.beta) * (self.ack_cnt/self.cwnd)
+        self.wtcp = self.wtcp + (3*self.BETA)/(2-self.BETA) * (self.ack_cnt/self.cwnd)
         self.ack_cnt = 0
         logging.info(f'{self.round_number} -- wtcp: {self.wlast_max}, ack_cnt: {self.ack_cnt}')
         if self.wtcp > self.cwnd:
@@ -198,7 +203,7 @@ class CubicTCPCongestionControl:
 
 if __name__ == '__main__':
     cubic_tcp = CubicTCPCongestionControl(
-        beta=0.2 , c=0.4, cwnd=10, tcp_friendliness=True, fast_convergence=True
+        cwnd=10, c=0.4, BETA=0.2, tcp_friendliness=True, fast_convergence=True
     )
     for _ in range(1000):
         cubic_tcp.run()
