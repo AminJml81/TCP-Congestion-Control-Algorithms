@@ -1,5 +1,3 @@
-# this is the exact implementaion from the 
-# TA Code in the Lecture which is in the materials folder.
 import matplotlib.pyplot as plt
 import logging, random
 import pandas as pd
@@ -111,7 +109,7 @@ if __name__ == '__main__':
         wmax= 30, wmin=5, smin=1, smax=5, 
         low_window=4,cwnd=10)
     
-    for _ in range(20):
+    for _ in range(50):
         bic_tcp.run()
         bic_tcp.insert_paramaters_to_dataframe()
         bic_tcp.round_number += 1

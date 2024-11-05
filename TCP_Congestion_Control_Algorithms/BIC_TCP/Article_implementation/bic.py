@@ -1,5 +1,3 @@
-# this is the exact implementaion from the 
-# pseudo code in the article.
 import matplotlib.pyplot as plt
 import threading, logging, time, random
 import pandas as pd

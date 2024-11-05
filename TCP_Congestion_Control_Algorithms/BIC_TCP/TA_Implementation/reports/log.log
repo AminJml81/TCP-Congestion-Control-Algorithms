@@ -8,83 +8,205 @@
 
 2 -- Binary Search Increase
 2 -- midpoint = 23.75
-PACKET LOSS
-2 -- wmax = 23.75
-2 -- wmax(23.75) - cwnd(15) > smax(5)
+2 -- wmin = 23.75
+2 -- wmax(30) - cwnd(15) > smax(5)
 2 -- Additive Increase
-2 -- wmax(23.75) - cwnd(15) > smax(5)
+2 -- wmax(30) - cwnd(15) > smax(5)
 2 -- cwnd = 20
 
 3 -- Binary Search Increase
-3 -- midpoint = 20.625
-3 -- wmin = 20.625
+3 -- midpoint = 26.875
+3 -- wmin = 26.875
+3 -- wmax(30) - cwnd(20) > smax(5)
+3 -- Additive Increase
+3 -- wmax(30) - cwnd(20) > smax(5)
+3 -- cwnd = 25
 
 4 -- Binary Search Increase
-4 -- midpoint = 22.1875
-4 -- wmin = 22.1875
+4 -- midpoint = 28.4375
+4 -- wmin = 28.4375
 
 5 -- Binary Search Increase
-5 -- midpoint = 22.96875
-PACKET LOSS
-5 -- wmax = 22.96875
+5 -- midpoint = 29.21875
+5 -- wmin = 29.21875
 
 6 -- Binary Search Increase
-6 -- midpoint = 22.578125
-6 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+6 -- midpoint = 29.609375
+6 -- wmax(30) - wmin(29.21875) < smin(1)
 
 7 -- Binary Search Increase
-7 -- midpoint = 22.578125
-7 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+7 -- midpoint = 29.609375
+7 -- wmax(30) - wmin(29.21875) < smin(1)
 
 8 -- Binary Search Increase
-8 -- midpoint = 22.578125
-8 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+8 -- midpoint = 29.609375
+8 -- wmax(30) - wmin(29.21875) < smin(1)
 
 9 -- Binary Search Increase
-9 -- midpoint = 22.578125
-9 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+9 -- midpoint = 29.609375
+9 -- wmax(30) - wmin(29.21875) < smin(1)
 
 10 -- Binary Search Increase
-10 -- midpoint = 22.578125
-10 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+10 -- midpoint = 29.609375
+10 -- wmax(30) - wmin(29.21875) < smin(1)
 
 11 -- Binary Search Increase
-11 -- midpoint = 22.578125
-11 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+11 -- midpoint = 29.609375
+11 -- wmax(30) - wmin(29.21875) < smin(1)
 
 12 -- Binary Search Increase
-12 -- midpoint = 22.578125
-12 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+12 -- midpoint = 29.609375
+12 -- wmax(30) - wmin(29.21875) < smin(1)
 
 13 -- Binary Search Increase
-13 -- midpoint = 22.578125
-13 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+13 -- midpoint = 29.609375
+13 -- wmax(30) - wmin(29.21875) < smin(1)
 
 14 -- Binary Search Increase
-14 -- midpoint = 22.578125
-14 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+14 -- midpoint = 29.609375
+14 -- wmax(30) - wmin(29.21875) < smin(1)
 
 15 -- Binary Search Increase
-15 -- midpoint = 22.578125
-15 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+15 -- midpoint = 29.609375
+15 -- wmax(30) - wmin(29.21875) < smin(1)
 
 16 -- Binary Search Increase
-16 -- midpoint = 22.578125
-16 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+16 -- midpoint = 29.609375
+16 -- wmax(30) - wmin(29.21875) < smin(1)
 
 17 -- Binary Search Increase
-17 -- midpoint = 22.578125
-17 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+17 -- midpoint = 29.609375
+17 -- wmax(30) - wmin(29.21875) < smin(1)
 
 18 -- Binary Search Increase
-18 -- midpoint = 22.578125
-18 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+18 -- midpoint = 29.609375
+18 -- wmax(30) - wmin(29.21875) < smin(1)
 
 19 -- Binary Search Increase
-19 -- midpoint = 22.578125
-19 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+19 -- midpoint = 29.609375
+19 -- wmax(30) - wmin(29.21875) < smin(1)
 
 20 -- Binary Search Increase
-20 -- midpoint = 22.578125
-20 -- wmax(22.96875) - wmin(22.1875) < smin(1)
+20 -- midpoint = 29.609375
+20 -- wmax(30) - wmin(29.21875) < smin(1)
+
+21 -- Binary Search Increase
+21 -- midpoint = 29.609375
+21 -- wmax(30) - wmin(29.21875) < smin(1)
+
+22 -- Binary Search Increase
+22 -- midpoint = 29.609375
+22 -- wmax(30) - wmin(29.21875) < smin(1)
+
+23 -- Binary Search Increase
+23 -- midpoint = 29.609375
+23 -- wmax(30) - wmin(29.21875) < smin(1)
+
+24 -- Binary Search Increase
+24 -- midpoint = 29.609375
+24 -- wmax(30) - wmin(29.21875) < smin(1)
+
+25 -- Binary Search Increase
+25 -- midpoint = 29.609375
+25 -- wmax(30) - wmin(29.21875) < smin(1)
+
+26 -- Binary Search Increase
+26 -- midpoint = 29.609375
+26 -- wmax(30) - wmin(29.21875) < smin(1)
+
+27 -- Binary Search Increase
+27 -- midpoint = 29.609375
+27 -- wmax(30) - wmin(29.21875) < smin(1)
+
+28 -- Binary Search Increase
+28 -- midpoint = 29.609375
+28 -- wmax(30) - wmin(29.21875) < smin(1)
+
+29 -- Binary Search Increase
+29 -- midpoint = 29.609375
+29 -- wmax(30) - wmin(29.21875) < smin(1)
+
+30 -- Binary Search Increase
+30 -- midpoint = 29.609375
+30 -- wmax(30) - wmin(29.21875) < smin(1)
+
+31 -- Binary Search Increase
+31 -- midpoint = 29.609375
+31 -- wmax(30) - wmin(29.21875) < smin(1)
+
+32 -- Binary Search Increase
+32 -- midpoint = 29.609375
+32 -- wmax(30) - wmin(29.21875) < smin(1)
+
+33 -- Binary Search Increase
+33 -- midpoint = 29.609375
+33 -- wmax(30) - wmin(29.21875) < smin(1)
+
+34 -- Binary Search Increase
+34 -- midpoint = 29.609375
+34 -- wmax(30) - wmin(29.21875) < smin(1)
+
+35 -- Binary Search Increase
+35 -- midpoint = 29.609375
+35 -- wmax(30) - wmin(29.21875) < smin(1)
+
+36 -- Binary Search Increase
+36 -- midpoint = 29.609375
+36 -- wmax(30) - wmin(29.21875) < smin(1)
+
+37 -- Binary Search Increase
+37 -- midpoint = 29.609375
+37 -- wmax(30) - wmin(29.21875) < smin(1)
+
+38 -- Binary Search Increase
+38 -- midpoint = 29.609375
+38 -- wmax(30) - wmin(29.21875) < smin(1)
+
+39 -- Binary Search Increase
+39 -- midpoint = 29.609375
+39 -- wmax(30) - wmin(29.21875) < smin(1)
+
+40 -- Binary Search Increase
+40 -- midpoint = 29.609375
+40 -- wmax(30) - wmin(29.21875) < smin(1)
+
+41 -- Binary Search Increase
+41 -- midpoint = 29.609375
+41 -- wmax(30) - wmin(29.21875) < smin(1)
+
+42 -- Binary Search Increase
+42 -- midpoint = 29.609375
+42 -- wmax(30) - wmin(29.21875) < smin(1)
+
+43 -- Binary Search Increase
+43 -- midpoint = 29.609375
+43 -- wmax(30) - wmin(29.21875) < smin(1)
+
+44 -- Binary Search Increase
+44 -- midpoint = 29.609375
+44 -- wmax(30) - wmin(29.21875) < smin(1)
+
+45 -- Binary Search Increase
+45 -- midpoint = 29.609375
+45 -- wmax(30) - wmin(29.21875) < smin(1)
+
+46 -- Binary Search Increase
+46 -- midpoint = 29.609375
+46 -- wmax(30) - wmin(29.21875) < smin(1)
+
+47 -- Binary Search Increase
+47 -- midpoint = 29.609375
+47 -- wmax(30) - wmin(29.21875) < smin(1)
+
+48 -- Binary Search Increase
+48 -- midpoint = 29.609375
+48 -- wmax(30) - wmin(29.21875) < smin(1)
+
+49 -- Binary Search Increase
+49 -- midpoint = 29.609375
+49 -- wmax(30) - wmin(29.21875) < smin(1)
+
+50 -- Binary Search Increase
+50 -- midpoint = 29.609375
+50 -- wmax(30) - wmin(29.21875) < smin(1)
 

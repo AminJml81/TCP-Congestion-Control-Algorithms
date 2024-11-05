@@ -61,7 +61,7 @@ class CubicTCPCongestionControl:
         )
 
         # setting up Pandas dataFrame.
-        self.dataframe = pd.DataFrame(columns=['round', 'cwnd', 'wlast_max', 'wctp', 'epoch_start', 'origin_point', 'dMin', 'ack_cnt'])
+        self.dataframe = pd.DataFrame(columns=['round', 'cwnd', 'wlast_max', 'wtcp', 'epoch_start', 'origin_point', 'dMin', 'ack_cnt'])
 
         # setting up plot
         plt.ion()
@@ -118,7 +118,7 @@ class CubicTCPCongestionControl:
 
     def _packet_loss(self):
         while self.is_running:
-            number = random.random() * 10
+            number = random.random() * 3
             time.sleep(number)
             logging.error(f'{self.round_number} -- PACKET LOSS')
             self.epoch_start = 0
@@ -135,7 +135,7 @@ class CubicTCPCongestionControl:
 
     def _timeout(self):
         while self.is_running:
-            number = random.random() * 50
+            number = random.random() * 6
             time.sleep(number)
             logging.error(f'{self.round_number} -- TIMEOUT')
         self._cubic_reset()
@@ -178,9 +178,9 @@ class CubicTCPCongestionControl:
         logging.info(f'{self.round_number} -- TCP Friendliness')
         self.wtcp = self.wtcp + (3*self.beta)/(2-self.beta) * (self.ack_cnt/self.cwnd)
         self.ack_cnt = 0
-        logging.info(f'{self.round_number} -- wctp: {self.wlast_max}, ack_cnt: {self.ack_cnt}')
+        logging.info(f'{self.round_number} -- wtcp: {self.wlast_max}, ack_cnt: {self.ack_cnt}')
         if self.wtcp > self.cwnd:
-            logging.info(f'{self.round_number} -- wctp({self.wtcp}) > cwnd({self.cwnd})')
+            logging.info(f'{self.round_number} -- wtcp({self.wtcp}) > cwnd({self.cwnd})')
             max_cnt = (self.cwnd)/(self.wtcp-self.cwnd)
             if self.cnt > max_cnt:
                 logging.info(f'{self.round_number} -- cnt({self.cnt}) > max_cnt({max_cnt})')

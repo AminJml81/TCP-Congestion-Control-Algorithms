@@ -80,7 +80,7 @@ class CubicTCPCongestionControl:
 
     def _packet_loss(self):
         while self.is_running:
-            number = random.random() * 10
+            number = random.random() * 2
             time.sleep(number)
             self.t_last_loss = self.t
             logging.error(f'{self.t} -- PACKET LOSS')
