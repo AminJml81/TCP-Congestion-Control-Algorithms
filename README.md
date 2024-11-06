@@ -37,4 +37,4 @@ pip install requirements.txt
 ```
 Then run any algorithm as you wish.
 
-also you can run jupyter notebooks adn analyze the algorithms data.
+also you can run jupyter notebooks and analyze the algorithms data.
