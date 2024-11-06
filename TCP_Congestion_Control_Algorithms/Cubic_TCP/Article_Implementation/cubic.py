@@ -5,15 +5,16 @@ import time, threading, logging, random
 
 class CubicTCPCongestionControl:
 
-    def __init__(self, c:float, cwnd:float, BETA:float,
+    def __init__(self, cwnd:float, C:float, BETA:float,
                 tcp_friendliness:bool, fast_convergence:bool):
         """
         Args:
-            c(float): cubic parameter.
+            C(float): cubic parameter. (constant)
             cwnd(float): congestion window size.
             BETA(float): multiplicative window decrease factor. (constant)
+            fast_convergence(bool): if True when a loss event occurs, before a window reduction of the congestion window, the protocol
+                                       remembers the last value of Wmax.
             tcp_friendliness(bool):
-            fast_convergence(bool):
 
         Other Instance Variables:
             is_running(bool): variable to stop packet loss and timeout threads when is False.
@@ -42,7 +43,7 @@ class CubicTCPCongestionControl:
 
             tcp_timestamp(float): timestamp representing the current time.
         """
-        self.c = c
+        self.C = C
         self.BETA = BETA 
         self.cwnd = cwnd
         self.tcp_friendliness = tcp_friendliness
@@ -167,7 +168,7 @@ class CubicTCPCongestionControl:
             logging.info(f'{self.round_number} -- ack_cnt: {self.ack_cnt}, wtcp: {self.wtcp}')
 
         t = time.time() + self.dMin - self.epoch_start
-        target = self.origin_point + self.c * (t-self.k)**3
+        target = self.origin_point + self.C * (t-self.k)**3
         logging.info(f'{self.round_number} -- t: {t}, target: {target}, cwnd: {self.cwnd}')
         if target > self.cwnd:
             logging.info(f'{self.round_number} -- target({target}) > cwnd({self.cwnd})')
@@ -203,7 +204,7 @@ class CubicTCPCongestionControl:
 
 if __name__ == '__main__':
     cubic_tcp = CubicTCPCongestionControl(
-        cwnd=10, c=0.4, BETA=0.2, tcp_friendliness=True, fast_convergence=True
+        cwnd=10, C=0.4, BETA=0.2, tcp_friendliness=True, fast_convergence=True
     )
     for _ in range(1000):
         cubic_tcp.run()

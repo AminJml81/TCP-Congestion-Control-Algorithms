@@ -5,15 +5,14 @@ import random, logging, threading, time
 
 class CubicTCPCongestionControl:
 
-    def __init__(self, cwnd: float, wmax:float, c:float, LOW_WINDOW:float):
+    def __init__(self, cwnd: float, wmax:float, C:float, LOW_WINDOW:float):
         """
         Args:
             cwnd(float): congestion window size.
             wmax(float): the window size just before the last fast recovery
                           (where the last packet loss occurred).
-            c(float): cubic parameter.
-            
 
+            c(float): cubic parameter. (constant)
             LOW_WINDOW(int): if the window size is larger than this threshold,
                                  BIC engages. (constant)
 
@@ -26,7 +25,7 @@ class CubicTCPCongestionControl:
         """
         self.cwnd = cwnd
         self.wmax = wmax
-        self.c = c
+        self.C = C
         self.LOW_WINDOW = LOW_WINDOW
 
         self.t = 1
@@ -88,10 +87,10 @@ class CubicTCPCongestionControl:
 
     def _cubic_function(self, time_since_loss):
         logging.info(f'{self.t} -- Cubic Function')
-        self.k = ((self.wmax -1) / self.c) ** (1/3)
+        self.k = ((self.wmax -1) / self.C) ** (1/3)
 
         logging.info(f'{self.t} -- k: {self.k}')
-        return self.wmax + self.c * (time_since_loss-self.k) ** 3
+        return self.wmax + self.C * (time_since_loss-self.k) ** 3
 
     def _cubic_increase(self):
         logging.info(f'{self.t} -- Cubic Increase')
@@ -111,7 +110,7 @@ class CubicTCPCongestionControl:
 
 if __name__ == '__main__':
     cubic_tcp = CubicTCPCongestionControl(
-        cwnd=10, wmax=30, c=0.4, LOW_WINDOW=4 
+        cwnd=10, wmax=30, C=0.4, LOW_WINDOW=4 
     )
     for _ in range(1000):
         cubic_tcp.run()
