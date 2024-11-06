@@ -36,3 +36,5 @@ git clone https://github.com/AminJml81/TCP-Congestion-Control-Algorithms.git
 pip install requirements.txt
 ```
 Then run any algorithm as you wish.
+
+also you can run jupyter notebooks adn analyze the algorithms data.
