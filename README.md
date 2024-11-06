@@ -29,7 +29,7 @@ Jupyter Notebooks: Additional analysis and visualizations.
 ### Clone project
 
 ```sh
-git clone https://github.com/AminJml81/Maktabkhooneh-django-for-beginners-course-final-project.git
+git clone https://github.com/AminJml81/TCP-Congestion-Control-Algorithms.git
 ```
 
 ```sh
